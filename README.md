@@ -1,2 +1,7 @@
-# lanbo
-Application that allows you to land and borrow tokens and earn or pay interest against it.Also demostrates aave integration. 
+# lenbo
+Application that allows you to lend/borrow tokens and earn/pay interest against it.Also demostrates integration with Aave. 
+
+
+# Technologies used
+- Reactjs
+- Aave
