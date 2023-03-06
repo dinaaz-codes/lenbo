@@ -1,5 +1,7 @@
-import React from 'react';
-import './App.css';
+import React from "react";
+import "./App.css";
+import Nav from "./components/Nav";
+import { AppRoutes } from "./routes/AppRoutes";
 
 declare global {
   interface Window {
@@ -10,6 +12,7 @@ declare global {
 function App() {
   return (
     <div className="App">
+      <AppRoutes/>
     </div>
   );
 }
