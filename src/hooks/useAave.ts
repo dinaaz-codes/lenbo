@@ -8,6 +8,7 @@ import {
   InterestRate,
 } from "@aave/contract-helpers";
 import { providers, BigNumber } from "ethers";
+import { getProvider } from "../utils/web3";
 
 type TransactionParamType = {
   provider: providers.Web3Provider;
@@ -70,33 +71,31 @@ const useAave = () => {
     chainId: number,
     borrowerAddress: string,
     reserve: string,
-    amount: number,
+    amount: string,
     interestRateMode: InterestRate
   ) => {
     try {
-      const poolAddress = networks.find(
-        (network) => network.chainId == chainId
-      )?.poolAddress;
+      const network = networks.find((network) => network.chainId == chainId);
 
-      if (!poolAddress) throw new Error("Invalid network");
+      if (!network?.poolAddress) throw new Error("Invalid network");
 
-      //check what is a provider and wethGateway address
       const poolObj = getPoolObj(
-        "providerSubstitute",
-        poolAddress,
-        "wethGatewayAddress"
+        new providers.Web3Provider(getProvider()),
+        network.poolAddress,
+        network.wethGateway
       );
 
       const txs: EthereumTransactionTypeExtended[] = await poolObj.borrow({
         user: borrowerAddress,
         reserve,
-        amount: amount.toString(),
+        amount: amount,
         interestRateMode,
       });
 
-      //check with dom about txs
+      console.log("transactions", txs);
+
       return await submitTransaction({
-        provider: "providerSubstitute",
+        provider: new providers.Web3Provider(getProvider()),
         tx: txs[0],
       });
     } catch (err) {
@@ -110,31 +109,27 @@ const useAave = () => {
     chainId: number,
     depositorsAddress: string,
     reserve: string,
-    amount: number
+    amount: string
   ) => {
     try {
-      const poolAddress = networks.find(
-        (network) => network.chainId == chainId
-      )?.poolAddress;
+      const network = networks.find((network) => network.chainId == chainId);
 
-      if (!poolAddress) throw new Error("Invalid network");
+      if (!network?.poolAddress) throw new Error("Invalid network");
 
-      //check what is a provider and wethGateway address
       const poolObj = getPoolObj(
-        "providerSubstitute",
-        poolAddress,
-        "wethGatewayAddress"
+        new providers.Web3Provider(getProvider()),
+        network.poolAddress,
+        network.wethGateway
       );
 
       const txs: EthereumTransactionTypeExtended[] = await poolObj.supply({
         user: depositorsAddress,
         reserve,
-        amount: amount.toString(),
+        amount: amount,
       });
-
-      //check with dom about txs
+      console.log("tsx =>", txs);
       return await submitTransaction({
-        provider: "providerSubstitute",
+        provider: new providers.Web3Provider(getProvider()),
         tx: txs[0],
       });
     } catch (err) {
@@ -148,25 +143,22 @@ const useAave = () => {
     chainId: number,
     depositorsAddress: string,
     reserve: string,
-    amount: number,
+    amount: string,
     interestRateMode: InterestRate,
     repayType: RepayTypes = RepayTypes.STANDARD
   ) => {
     try {
-      const poolAddress = networks.find(
-        (network) => network.chainId == chainId
-      )?.poolAddress;
+      const network = networks.find((network) => network.chainId == chainId);
 
-      if (!poolAddress) throw new Error("Invalid network");
+      if (!network?.poolAddress) throw new Error("Invalid network");
 
-      //check what is a provider and wethGateway address
       const poolObj = getPoolObj(
-        "providerSubstitute",
-        poolAddress,
-        "wethGatewayAddress"
+        new providers.Web3Provider(getProvider()),
+        network.poolAddress,
+        network.wethGateway
       );
 
-      let txs: EthereumTransactionTypeExtended[];
+      let txs: EthereumTransactionTypeExtended[] = [];
 
       switch (repayType) {
         case RepayTypes.WITH_A_TOKENS:
@@ -178,16 +170,15 @@ const useAave = () => {
             user: depositorsAddress,
             reserve,
             interestRateMode,
-            amount: amount.toString(),
+            amount: amount,
           });
           break;
         default:
           break;
       }
 
-      //check with dom about txs
       return await submitTransaction({
-        provider: "providerSubstitute",
+        provider: new providers.Web3Provider(getProvider()),
         tx: txs[0],
       });
     } catch (err) {
@@ -201,33 +192,30 @@ const useAave = () => {
     chainId: number,
     withdrawToAddress: string,
     reserve: string,
-    amount: number,
-    aTokenAddress:string
+    amount: string,
+    aTokenAddress: string
   ) => {
     try {
-      const poolAddress = networks.find(
-        (network) => network.chainId == chainId
-      )?.poolAddress;
+      const network = networks.find((network) => network.chainId == chainId);
 
-      if (!poolAddress) throw new Error("Invalid network");
+      if (!network?.poolAddress) throw new Error("Invalid network");
 
-      //check what is a provider and wethGateway address
       const poolObj = getPoolObj(
-        "providerSubstitute",
-        poolAddress,
-        "wethGatewayAddress"
+        new providers.Web3Provider(getProvider()),
+        network.poolAddress,
+        network.wethGateway
       );
 
       const txs: EthereumTransactionTypeExtended[] = await poolObj.withdraw({
         user: withdrawToAddress,
         reserve,
-        amount: amount.toString(),
-        aTokenAddress
+        amount: amount,
+        aTokenAddress,
       });
 
       //check with dom about txs
       return await submitTransaction({
-        provider: "providerSubstitute",
+        provider: new providers.Web3Provider(getProvider()),
         tx: txs[0],
       });
     } catch (err) {
@@ -236,7 +224,7 @@ const useAave = () => {
     }
   };
 
-  return { getReserves };
+  return { getReserves, borrow, repay, withdraw, supply };
 };
 
 export default useAave;

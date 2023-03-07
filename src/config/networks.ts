@@ -10,6 +10,7 @@ type NetworkType = {
   nativeToken: string;
   decimal: number;
   isTestnet: boolean;
+  wethGateway: string;
   rpcUrl?: string;
   reserves?: TokenType[];
 };
@@ -22,6 +23,7 @@ export const networks: NetworkType[] = [
     nativeToken: "ether",
     decimal: 18,
     isTestnet: false,
+    wethGateway: "0xD322A49006FC828F9B5B37Ab215F99B4E5caB19C",
   },
   {
     chainId: 137,
@@ -30,14 +32,16 @@ export const networks: NetworkType[] = [
     nativeToken: "matic",
     decimal: 18,
     isTestnet: false,
+    wethGateway: "0x1e4b7A6b903680eab0c5dAbcb8fD429cD2a9598c",
   },
   {
     chainId: 5,
     name: "goerli",
-    poolAddress: "0x2A498323aCaD2971a8b1936fD7540596dC9BBacD",
+    poolAddress: "0xCE5f067F3D0AEe076EB6122c8989A48f82f2499a",
     nativeToken: "goerliEth",
     decimal: 18,
     isTestnet: true,
+    wethGateway: "0x2A498323aCaD2971a8b1936fD7540596dC9BBacD",
     reserves: [
       {
         name: "DAI-TestnetMintableERC20-Aave",
@@ -69,7 +73,7 @@ export const networks: NetworkType[] = [
       },
       {
         name: "WETH-TestnetMintableERC20-Aave",
-        address: "0xCCB14936C2E000ED8393A571D15A2672537838Ad ",
+        address: "0xCCB14936C2E000ED8393A571D15A2672537838Ad",
       },
     ],
   },
