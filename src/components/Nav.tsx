@@ -2,6 +2,9 @@ import { useEffect } from "react";
 import ConnectWalletButton from "./ConnectWalletButton";
 import useWeb3 from "../hooks/useWeb3";
 import { Link } from "react-router-dom";
+import { Navbar, Container, Nav as BNav } from "react-bootstrap";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { faCircleDollarToSlot } from "@fortawesome/free-solid-svg-icons";
 
 const Nav = () => {
   const { isConnected, connectWallet } = useWeb3();
@@ -12,25 +15,31 @@ const Nav = () => {
 
   const getNavItems = () => {
     return (
-      <>
-        <li>
-          <Link to="/">Home </Link>
-        </li>
-        <li>
-          <Link to="/allowance">Allowance</Link>
-        </li>
-      </>
+      <BNav className="me-auto">
+        <BNav.Link href="light">
+          <Link to="/">Home</Link>
+        </BNav.Link>
+        <BNav.Link>
+          <Link to="/allowance"></Link>
+        </BNav.Link>
+      </BNav>
     );
   };
 
   return (
-    <ul>
-      <ConnectWalletButton
-        isConnected={isConnected}
-        onClickHandler={connectWallet}
-      />
-      {isConnected && getNavItems()}
-    </ul>
+    <>
+      <Navbar bg="dark" variant="dark">
+        <Container>
+          <Navbar.Brand>
+            <FontAwesomeIcon icon={faCircleDollarToSlot} /> <b>Lenbo</b>
+          </Navbar.Brand>
+            <ConnectWalletButton
+              isConnected={isConnected}
+              onClickHandler={connectWallet}
+            />
+        </Container>
+      </Navbar>
+    </>
   );
 };
 
