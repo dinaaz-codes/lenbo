@@ -5,3 +5,8 @@ Application that allows you to lend/borrow tokens and earn/pay interest against 
 # Technologies used
 - Reactjs
 - Aave
+
+# Run Project
+```bash
+npm run start
+```
