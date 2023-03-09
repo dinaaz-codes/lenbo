@@ -5,7 +5,7 @@ import { getProvider } from "../utils/web3";
 const useWeb3 = () => {
   const [activeAccount, setActiveAccount] = useState<string>();
   const [isConnected, setIsConnected] = useState<boolean>(false);
-  const [chainId,setChainId] = useState<number>(1);
+  const [chainId,setChainId] = useState<number>();
   const web3 = useContext(Web3Context);
 
   const connectWallet = async () => {

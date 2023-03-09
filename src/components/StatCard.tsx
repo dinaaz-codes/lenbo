@@ -1,12 +1,29 @@
 import { Button, Card } from "react-bootstrap";
 
-const StatCard = () => {
+type Props = {
+  totalDebt: number;
+  totalBalance: number;
+  totalCollateral: number;
+  borrowCapacity: number;
+};
+
+const StatCard = ({totalBalance, borrowCapacity, totalCollateral, totalDebt}: Props) => {
   return (
-    <Card>
+    <Card className="bg-dark text-white mt-3">
       <Card.Body>
-        <Card.Title>Special title treatment</Card.Title>
-        <Card.Text>
-          With supporting text below as a natural lead-in to additional content.
+        <Card.Title>Account Summary</Card.Title>
+        <hr/>
+        <Card.Text className="mt-4">
+          Balance: <b>${totalBalance.toFixed(2)}</b>
+        </Card.Text>
+        <Card.Text className="mt-4">
+          Total Collateral: <b>${totalCollateral.toFixed(2)}</b>
+        </Card.Text>
+        <Card.Text className="mt-4">
+          Borrow Limit: <b>${borrowCapacity.toFixed(2)}</b>
+        </Card.Text>
+        <Card.Text className="mt-4">
+          Total Debt: <b>${totalDebt.toFixed(2)}</b>
         </Card.Text>
       </Card.Body>
     </Card>

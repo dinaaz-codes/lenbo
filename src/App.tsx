@@ -1,4 +1,3 @@
-import Web3 from "web3";
 import "./App.css";
 import Nav from "./components/Nav";
 import Web3Context from "./context/Web3Context";
